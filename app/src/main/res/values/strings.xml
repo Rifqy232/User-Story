@@ -1,3 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">User Story</string>
+    <string name="splash_screen_text">User\nStory</string>
+    <string name="submit">Submit</string>
+    <string name="login">Login</string>
+    <string name="login_desc">Please login with your existing account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="welcome_desc">Welcome to the User Story App, please login or register</string>
+    <string name="register">Register</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
