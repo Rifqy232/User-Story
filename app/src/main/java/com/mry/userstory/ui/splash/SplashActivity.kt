@@ -1,30 +1,56 @@
 package com.mry.userstory.ui.splash
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import com.mry.userstory.R
+import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.ui.welcome.WelcomeActivity
+import com.mry.userstory.utils.UserPreferences
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+    private lateinit var pref: UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        pref = UserPreferences.getInstance(dataStore)
         hideSystemUI()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }, 3000)
+        lifecycleScope.launch {
+            val token = pref.getUserToken().first().toString()
+            if (token.isNotEmpty()) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val homeIntent = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(homeIntent)
+                    finish()
+                }, 3000)
+            } else {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
+                    startActivity(welcomeIntent)
+                    finish()
+                }, 3000)
+            }
+        }
     }
 
     private fun hideSystemUI() {
