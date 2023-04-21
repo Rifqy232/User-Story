@@ -1,16 +1,11 @@
 package com.mry.userstory.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.LoginResult
 import com.mry.userstory.data.response.RegisterResponse
 import com.mry.userstory.data.retrofit.ApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class UserRepository private constructor(private val apiService: ApiService) {
     fun register(
@@ -21,19 +16,19 @@ class UserRepository private constructor(private val apiService: ApiService) {
         emit(CustomResult.Loading)
         try {
             val response = apiService.register(name, email, password)
-            CustomResult.Success(response)
+            emit(CustomResult.Success(response))
         } catch (e: Exception) {
-            CustomResult.Error(e.message.toString())
+            emit(CustomResult.Error(e.message.toString()))
         }
     }
 
-    fun login(email: String, password: String): LiveData<CustomResult<LoginResult>> = liveData {
+    fun login(email: String, password: String): LiveData<CustomResult<LoginResponse>> = liveData {
         emit(CustomResult.Loading)
         try {
             val response = apiService.login(email, password)
-            CustomResult.Success(response.loginResult)
+            emit(CustomResult.Success(response))
         } catch (e: Exception) {
-            CustomResult.Error(e.message.toString())
+            emit(CustomResult.Error(e.message.toString()))
         }
     }
 
