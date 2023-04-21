@@ -1,13 +1,11 @@
 package com.mry.userstory.ui.welcome.login
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.mry.userstory.R
 import com.mry.userstory.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
