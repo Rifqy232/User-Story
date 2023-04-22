@@ -12,4 +12,6 @@
     <string name="register_desc">Register with a new account</string>
     <string name="name">Name</string>
     <string name="logout">Logout</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

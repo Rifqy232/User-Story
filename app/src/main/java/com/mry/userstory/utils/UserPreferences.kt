@@ -1,5 +1,6 @@
 package com.mry.userstory.utils
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -7,37 +8,23 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
-    private val USER_TOKEN = stringPreferencesKey("user_token")
-
-    fun getUserToken(): Flow<String> {
-        return dataStore.data.map { preferences ->
-            preferences[USER_TOKEN] ?: ""
-        }
-    }
-
-    suspend fun saveUserToken(userToken: String) {
-        dataStore.edit { preferences ->
-            preferences[USER_TOKEN] = userToken
-        }
-    }
-
-    suspend fun logout() {
-        dataStore.edit { preferences ->
-            preferences.remove(USER_TOKEN)
-        }
-    }
-
+internal class UserPreferences(context: Context) {
     companion object {
-        @Volatile
-        private var INSTANCE: UserPreferences? = null
+        private const val PREFS_NAME = "user_pref"
+        private const val USER_TOKEN = "user_token"
+    }
 
-        fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
-            return INSTANCE ?: synchronized(this) {
-                val instance = UserPreferences(dataStore)
-                INSTANCE = instance
-                instance
-            }
-        }
+    private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    val editor = preferences.edit()
+    fun saveUserToken(token: String) {
+        editor.putString(USER_TOKEN, token)
+        editor.apply()
+    }
+
+    fun getUserToken(): String = preferences.getString(USER_TOKEN, "").toString()
+
+    fun removeUserToken() {
+        editor.remove(USER_TOKEN)
+        editor.apply()
     }
 }

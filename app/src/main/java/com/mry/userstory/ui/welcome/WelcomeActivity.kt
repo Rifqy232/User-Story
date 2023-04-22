@@ -11,6 +11,12 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
+        if (savedInstanceState == null) {
+            setupFragment()
+        }
+    }
+
+    private fun setupFragment() {
         val welcomeFragment = WelcomeFragment()
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()

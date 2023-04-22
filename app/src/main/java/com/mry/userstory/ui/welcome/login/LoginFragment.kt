@@ -26,15 +26,12 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
-
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     var isFromRegister: Boolean? = null
     private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
-    private lateinit var pref: UserPreferences
 
     companion object {
         const val EXTRA_IS_FROM_REGISTER = "extra_is_from_register"
@@ -50,8 +47,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        pref = UserPreferences.getInstance(requireContext().dataStore)
 
         if (savedInstanceState != null) {
             val isFromRegisterData = savedInstanceState.getBoolean(EXTRA_IS_FROM_REGISTER)
@@ -73,6 +68,7 @@ class LoginFragment : Fragment() {
                             showLoading(false)
                             loginProcess(result.data)
                         }
+
                         is CustomResult.Error -> {
                             showLoading(false)
                             Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
@@ -91,14 +87,18 @@ class LoginFragment : Fragment() {
         if (data.error!!) {
             Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
         } else {
-            lifecycleScope.launch {
-                pref.saveUserToken(data.loginResult?.token!!)
-                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
-                val intent = Intent(context, HomeActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-            }
+            saveUserToken(data.loginResult?.token.toString())
+            Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(context, HomeActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
+    }
+
+    private fun saveUserToken(token: String) {
+        val userPreferences = UserPreferences(requireContext())
+        userPreferences.saveUserToken(token)
     }
 
     private fun showLoading(state: Boolean) {
@@ -112,7 +112,6 @@ class LoginFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     requireActivity().finish()
                 }
-
             })
     }
 }

@@ -15,7 +15,6 @@
         android:theme="@style/Theme.UserStory"
         tools:targetApi="31">
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="false" />
         <activity

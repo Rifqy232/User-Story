@@ -22,34 +22,30 @@ import com.mry.userstory.utils.UserPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    private lateinit var pref: UserPreferences
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        pref = UserPreferences.getInstance(dataStore)
         hideSystemUI()
 
-        lifecycleScope.launch {
-            val token = pref.getUserToken().first().toString()
-            if (token.isNotEmpty()) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val homeIntent = Intent(applicationContext, HomeActivity::class.java)
-                    startActivity(homeIntent)
-                    finish()
-                }, 3000)
-            } else {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
-                    startActivity(welcomeIntent)
-                    finish()
-                }, 3000)
-            }
+        val pref = UserPreferences(this)
+        val token = pref.getUserToken()
+        if (token.isNotEmpty()) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val homeIntent = Intent(applicationContext, HomeActivity::class.java)
+                startActivity(homeIntent)
+                finish()
+            }, 3000)
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
+                startActivity(welcomeIntent)
+                finish()
+            }, 3000)
+
         }
     }
 
