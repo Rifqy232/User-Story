@@ -1,13 +1,19 @@
 package com.mry.userstory.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.databinding.StoriesItemBinding
 
-class StoriesAdapter(private val listStories: List<ListStoryItem>): RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
+class StoriesAdapter(private val listStories: List<ListStoryItem>, private val listener: OnItemClickListener): RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
+    interface OnItemClickListener {
+        fun onItemClick(id: String)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = StoriesItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -15,6 +21,10 @@ class StoriesAdapter(private val listStories: List<ListStoryItem>): RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindStories(listStories[position])
+
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(listStories[position].id.toString())
+        }
     }
 
     override fun getItemCount(): Int = listStories.size
@@ -26,6 +36,7 @@ class StoriesAdapter(private val listStories: List<ListStoryItem>): RecyclerView
             Glide.with(itemView)
                 .load(stories.photoUrl)
                 .into(binding.ivStory)
+            binding.ivStory.contentDescription = stories.description
         }
     }
 

@@ -2,6 +2,7 @@ package com.mry.userstory.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.mry.userstory.data.response.DetailStoryResponse
 import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.LoginResult
@@ -10,6 +11,16 @@ import com.mry.userstory.data.response.StoriesResponse
 import com.mry.userstory.data.retrofit.ApiService
 
 class Repository private constructor(private val apiService: ApiService) {
+    fun getDetailStory(id: String): LiveData<CustomResult<DetailStoryResponse>> = liveData {
+        emit(CustomResult.Loading(true))
+        try {
+            val response = apiService.getDetailStory(id)
+            emit(CustomResult.Success(response))
+        } catch (e: Exception) {
+            emit(CustomResult.Error(e.toString()))
+        }
+    }
+
     fun getStories(): LiveData<CustomResult<StoriesResponse>> = liveData {
         emit(CustomResult.Loading(true))
         try {

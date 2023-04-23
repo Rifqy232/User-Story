@@ -1,5 +1,6 @@
 package com.mry.userstory.data.retrofit
 
+import com.mry.userstory.data.response.DetailStoryResponse
 import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.RegisterResponse
 import com.mry.userstory.data.response.StoriesResponse
@@ -8,6 +9,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -27,4 +29,9 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStories() : StoriesResponse
+
+    @GET("stories/{id}")
+    suspend fun getDetailStory(
+        @Path("id") id: String
+    ) : DetailStoryResponse
 }

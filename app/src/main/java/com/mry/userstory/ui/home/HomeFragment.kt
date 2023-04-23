@@ -1,6 +1,7 @@
 package com.mry.userstory.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,15 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mry.userstory.R
 import com.mry.userstory.data.CustomResult
+import com.mry.userstory.data.response.DetailStoryResponse
 import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.databinding.FragmentHomeBinding
+import com.mry.userstory.ui.detail.DetailFragment
 import com.mry.userstory.utils.ViewModelFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels {
         ViewModelFactory(requireContext())
@@ -37,9 +41,8 @@ class HomeFragment : Fragment() {
                     is CustomResult.Loading -> showLoading(true)
                     is CustomResult.Success -> {
                         showLoading(false)
-                        val storyData = result.data.listStory
                         @Suppress("UNCHECKED_CAST")
-                        setStoriesData(storyData as List<ListStoryItem>)
+                        setStoriesData(result.data.listStory as List<ListStoryItem>)
                     }
 
                     is CustomResult.Error -> {
@@ -60,12 +63,28 @@ class HomeFragment : Fragment() {
     }
 
     private fun setStoriesData(listStories: List<ListStoryItem>) {
-        val storiesAdapter = StoriesAdapter(listStories)
+        val storiesAdapter = StoriesAdapter(listStories, this)
         binding.rvStories.adapter = storiesAdapter
     }
 
     private fun showLoading(state: Boolean) {
         if (state) binding.progressBar.visibility =
             View.VISIBLE else binding.progressBar.visibility = View.GONE
+    }
+
+    override fun onItemClick(id: String) {
+        val detailFragment = DetailFragment()
+        val fragmentManager = parentFragmentManager
+
+        val bundle = Bundle()
+        bundle.putString(DetailFragment.EXTRA_ID, id)
+
+        detailFragment.arguments = bundle
+
+        fragmentManager.beginTransaction().apply {
+            replace(R.id.container, detailFragment, DetailFragment::class.java.simpleName)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

@@ -31,21 +31,22 @@ class SplashActivity : AppCompatActivity() {
 
         hideSystemUI()
 
-        val pref = UserPreferences(this)
-        val token = pref.getUserToken()
-        if (token.isNotEmpty()) {
-            Handler(Looper.getMainLooper()).postDelayed({
-                val homeIntent = Intent(applicationContext, HomeActivity::class.java)
-                startActivity(homeIntent)
-                finish()
-            }, 3000)
-        } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
-                startActivity(welcomeIntent)
-                finish()
-            }, 3000)
-
+        if (savedInstanceState == null) {
+            val pref = UserPreferences(this)
+            val token = pref.getUserToken()
+            if (token.isNotEmpty()) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val homeIntent = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(homeIntent)
+                    finish()
+                }, 3000)
+            } else {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
+                    startActivity(welcomeIntent)
+                    finish()
+                }, 3000)
+            }
         }
     }
 

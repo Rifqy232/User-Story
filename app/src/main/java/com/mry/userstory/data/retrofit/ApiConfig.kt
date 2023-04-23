@@ -28,10 +28,10 @@ class ApiConfig {
     companion object {
         fun getApiService(context: Context): ApiService {
             val userPreferences = UserPreferences(context)
-            val token = userPreferences.getUserToken()
             val interceptor = Interceptor { chain ->
-                val req = chain.request()
+                val token = userPreferences.getUserToken()
                 val requestToken = "Bearer $token"
+                val req = chain.request()
                 val requestHeader = req.newBuilder()
                     .addHeader("Authorization", requestToken)
                     .build()
