@@ -1,5 +1,7 @@
 package com.mry.userstory.ui.detail
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -51,12 +53,22 @@ class DetailFragment : Fragment() {
                     is CustomResult.Loading -> showLoading(true)
                     is CustomResult.Success -> {
                         showLoading(false)
-                        binding.tvName.text = result.data.story?.name
-                        binding.tvDescription.text = result.data.story?.description
+                        binding.tvName.apply {
+                            text = result.data.story?.name
+                            alpha = 0f
+                        }
+                        binding.tvDescription.apply {
+                            text = result.data.story?.description
+                            alpha = 0f
+                        }
                         Glide.with(requireContext())
                             .load(result.data.story?.photoUrl)
                             .into(binding.ivStory)
-                        binding.ivStory.contentDescription = result.data.story?.description
+                        binding.ivStory.apply {
+                            contentDescription = result.data.story?.description
+                            alpha = 0f
+                        }
+                        playAnimation()
                     }
                     is CustomResult.Error -> {
                         showLoading(false)
@@ -68,6 +80,17 @@ class DetailFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun playAnimation() {
+        val image = ObjectAnimator.ofFloat(binding.ivStory, View.ALPHA, 1f).setDuration(500)
+        val name = ObjectAnimator.ofFloat(binding.tvName, View.ALPHA, 1f).setDuration(500)
+        val description = ObjectAnimator.ofFloat(binding.tvDescription, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(image, name, description)
+            start()
         }
     }
 
