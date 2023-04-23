@@ -13,19 +13,23 @@ class ViewModelFactory(private val context: Context) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
+        return when {
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                return RegisterViewModel(Injection.provideRepository(context)) as T
+                RegisterViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                return LoginViewModel(Injection.provideRepository(context)) as T
+                LoginViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                return HomeViewModel(Injection.provideRepository(context)) as T
+                HomeViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                return DetailViewModel(Injection.provideRepository(context)) as T
+                DetailViewModel(Injection.provideRepository(context)) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

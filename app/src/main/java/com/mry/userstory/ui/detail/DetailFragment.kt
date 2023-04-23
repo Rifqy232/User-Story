@@ -41,7 +41,11 @@ class DetailFragment : Fragment() {
             id = arguments?.getString(EXTRA_ID)!!
         }
 
-        detailViewModel.getDetailStory(id).observe(viewLifecycleOwner) {result ->
+        if (savedInstanceState == null) {
+            detailViewModel.getDetailStory(id)
+        }
+
+        detailViewModel.detailStory.observe(viewLifecycleOwner) {result ->
             if (result != null) {
                 when (result) {
                     is CustomResult.Loading -> showLoading(true)

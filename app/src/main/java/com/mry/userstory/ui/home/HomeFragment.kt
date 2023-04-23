@@ -35,6 +35,10 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState == null) {
+            homeViewModel.getAllStories()
+        }
+
         homeViewModel.stories.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
