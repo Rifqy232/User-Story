@@ -11,10 +11,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.lifecycleScope
 import com.mry.userstory.R
 import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.ui.welcome.WelcomeActivity

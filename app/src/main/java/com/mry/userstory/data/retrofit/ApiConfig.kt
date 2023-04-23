@@ -3,10 +3,6 @@ package com.mry.userstory.data.retrofit
 import android.content.Context
 import android.provider.ContactsContract.Data
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.asLiveData
 import com.google.gson.Gson
 import com.mry.userstory.utils.UserPreferences

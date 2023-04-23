@@ -1,5 +1,6 @@
 package com.mry.userstory.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +18,7 @@ import com.mry.userstory.data.CustomResult
 import com.mry.userstory.data.response.DetailStoryResponse
 import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.databinding.FragmentHomeBinding
+import com.mry.userstory.ui.addStory.AddStoryActivity
 import com.mry.userstory.ui.detail.DetailFragment
 import com.mry.userstory.utils.ViewModelFactory
 
@@ -64,6 +67,11 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
 
         binding.rvStories.apply {
             layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(requireContext(), AddStoryActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -14,4 +14,10 @@
     <string name="logout">Logout</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="switch_camera">switch_camera</string>
+    <string name="capture_image">capture_image</string>
+    <string name="camerax">CAMERAX</string>
+    <string name="camera">CAMERA</string>
+    <string name="gallery">GALLERY</string>
+    <string name="upload">UPLOAD</string>
 </resources>
