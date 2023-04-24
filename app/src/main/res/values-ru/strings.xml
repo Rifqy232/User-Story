@@ -17,4 +17,7 @@
     <string name="gallery">ГАЛЕРЕЯ</string>
     <string name="upload">ЗАГРУЗИТЬ</string>
     <string name="preview_image">Изображение для предварительного просмотра</string>
+    <string name="email_invalid">Email не является допустимым</string>
+    <string name="password_invalid">Пароль слишком короткий</string>
+    <string name="field_required">Это поле обязательно к заполнению</string>
 </resources>

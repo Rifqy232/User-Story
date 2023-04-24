@@ -17,4 +17,7 @@
     <string name="gallery">GALERI</string>
     <string name="upload">UNGGAH</string>
     <string name="preview_image">Pratinjau Gambar</string>
+    <string name="email_invalid">Email tidak valid</string>
+    <string name="password_invalid">Password terlalu pendek</string>
+    <string name="field_required">Bagian ini harus diisi</string>
 </resources>

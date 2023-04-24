@@ -21,4 +21,7 @@
     <string name="gallery">GALLERY</string>
     <string name="upload">UPLOAD</string>
     <string name="preview_image">Preview Image</string>
+    <string name="email_invalid">Email is not valid</string>
+    <string name="password_invalid">Password too short</string>
+    <string name="field_required">This field is required</string>
 </resources>

@@ -17,4 +17,7 @@
     <string name="gallery">画廊</string>
     <string name="upload">上传</string>
     <string name="preview_image">预览图片</string>
+    <string name="email_invalid">电子邮件无效</string>
+    <string name="password_invalid">密码太短</string>
+    <string name="field_required">此字段是必需的</string>
 </resources>

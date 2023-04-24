@@ -41,7 +41,7 @@ class CustomEditTextPassword : AppCompatEditText, View.OnTouchListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if ((s?.length ?: 0) < 8) {
-                    setError("Password too short", errorIcon)
+                    setError(resources.getString(R.string.password_invalid), errorIcon)
                     setCompoundDrawablesWithIntrinsicBounds(null, null, errorIcon, null)
                 } else {
                     setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)

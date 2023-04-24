@@ -60,7 +60,7 @@ class RegisterFragment : Fragment() {
                         }
                     }
             } else {
-                binding.etName.error = "This field is required"
+                binding.etName.error = resources.getString(R.string.field_required)
             }
         }
     }

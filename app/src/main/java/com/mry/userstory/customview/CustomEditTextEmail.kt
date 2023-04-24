@@ -43,7 +43,7 @@ class CustomEditTextEmail : AppCompatEditText, View.OnTouchListener {
                 val email = s.toString()
                 val isValid = isValidEmail(email)
                 if (!isValid) {
-                    setError("Email is not valid", errorIcon)
+                    setError(resources.getString(R.string.email_invalid), errorIcon)
                     setCompoundDrawablesWithIntrinsicBounds(null, null, errorIcon, null)
                 } else {
                     setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
