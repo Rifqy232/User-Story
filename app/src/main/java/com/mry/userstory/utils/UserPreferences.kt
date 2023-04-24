@@ -1,8 +1,6 @@
 package com.mry.userstory.utils
 
 import android.content.Context
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 internal class UserPreferences(context: Context) {
     companion object {
@@ -11,7 +9,7 @@ internal class UserPreferences(context: Context) {
     }
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    val editor = preferences.edit()
+    private val editor = preferences.edit()
     fun saveUserToken(token: String) {
         editor.putString(USER_TOKEN, token)
         editor.apply()

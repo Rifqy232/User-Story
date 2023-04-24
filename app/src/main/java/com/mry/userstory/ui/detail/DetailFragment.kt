@@ -3,18 +3,15 @@ package com.mry.userstory.ui.detail
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.mry.userstory.R
 import com.mry.userstory.data.CustomResult
 import com.mry.userstory.databinding.FragmentDetailBinding
-import com.mry.userstory.ui.home.HomeViewModel
 import com.mry.userstory.utils.ViewModelFactory
 
 class DetailFragment : Fragment() {
@@ -47,7 +44,7 @@ class DetailFragment : Fragment() {
             detailViewModel.getDetailStory(id)
         }
 
-        detailViewModel.detailStory.observe(viewLifecycleOwner) {result ->
+        detailViewModel.detailStory.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is CustomResult.Loading -> showLoading(true)
@@ -70,6 +67,7 @@ class DetailFragment : Fragment() {
                         }
                         playAnimation()
                     }
+
                     is CustomResult.Error -> {
                         showLoading(false)
                         Toast.makeText(
@@ -86,7 +84,8 @@ class DetailFragment : Fragment() {
     private fun playAnimation() {
         val image = ObjectAnimator.ofFloat(binding.ivStory, View.ALPHA, 1f).setDuration(500)
         val name = ObjectAnimator.ofFloat(binding.tvName, View.ALPHA, 1f).setDuration(500)
-        val description = ObjectAnimator.ofFloat(binding.tvDescription, View.ALPHA, 1f).setDuration(500)
+        val description =
+            ObjectAnimator.ofFloat(binding.tvDescription, View.ALPHA, 1f).setDuration(500)
 
         AnimatorSet().apply {
             playSequentially(image, name, description)

@@ -7,13 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -23,7 +23,6 @@ import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.utils.ViewModelFactory
 import com.mry.userstory.utils.createCustomTempFile
 import com.mry.userstory.utils.reduceFileImage
-import com.mry.userstory.utils.rotateFile
 import com.mry.userstory.utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -99,10 +98,7 @@ class AddStoryActivity : AppCompatActivity() {
                 it.data?.getSerializableExtra("picture")
             } as? File
 
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
-
             myFile?.let { file ->
-//                rotateFile(file, isBackCamera)
                 getFile = file
                 binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
@@ -133,7 +129,6 @@ class AddStoryActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
 
             myFile.let { file ->
-//                rotateFile(file)
                 getFile = file
                 binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
@@ -188,6 +183,7 @@ class AddStoryActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         }
+
                         is CustomResult.Error -> {
                             showLoading(false)
                             Toast.makeText(

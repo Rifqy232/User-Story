@@ -2,13 +2,12 @@ package com.mry.userstory.ui.welcome.register
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.view.isInvisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mry.userstory.R
 import com.mry.userstory.data.CustomResult

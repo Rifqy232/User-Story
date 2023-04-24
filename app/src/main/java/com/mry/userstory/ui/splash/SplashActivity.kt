@@ -1,22 +1,18 @@
 package com.mry.userstory.ui.splash
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.mry.userstory.R
 import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.ui.welcome.WelcomeActivity
 import com.mry.userstory.utils.UserPreferences
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 
 @SuppressLint("CustomSplashScreen")

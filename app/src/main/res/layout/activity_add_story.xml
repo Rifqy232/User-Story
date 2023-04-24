@@ -43,10 +43,11 @@
         android:layout_marginBottom="8dp"
         android:hint="@string/description"
         android:inputType="textMultiLine"
-        android:maxLines="4"
+        android:maxLines="3"
         app:layout_constraintBottom_toBottomOf="@+id/iv_preview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btn_camera"

@@ -1,19 +1,7 @@
 package com.mry.userstory.data.retrofit
 
 import android.content.Context
-import android.provider.ContactsContract.Data
-import android.util.Log
-import androidx.lifecycle.asLiveData
-import com.google.gson.Gson
 import com.mry.userstory.utils.UserPreferences
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.supervisorScope
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

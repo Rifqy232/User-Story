@@ -1,15 +1,16 @@
 package com.mry.userstory.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.databinding.StoriesItemBinding
 
-class StoriesAdapter(private val listStories: List<ListStoryItem>, private val listener: OnItemClickListener): RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
+class StoriesAdapter(
+    private val listStories: List<ListStoryItem>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     interface OnItemClickListener {
         fun onItemClick(id: String)
     }
@@ -29,7 +30,8 @@ class StoriesAdapter(private val listStories: List<ListStoryItem>, private val l
 
     override fun getItemCount(): Int = listStories.size
 
-    class ViewHolder(private var binding: StoriesItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private var binding: StoriesItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindStories(stories: ListStoryItem) {
             binding.tvTitle.text = stories.name
             binding.tvDescription.text = stories.description

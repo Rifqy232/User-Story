@@ -1,9 +1,8 @@
 package com.mry.userstory.ui.welcome
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.mry.userstory.R
-import com.mry.userstory.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
 
