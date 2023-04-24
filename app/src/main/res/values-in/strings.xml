@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">User Story</string>
+    <string name="submit">Kirim</string>
+    <string name="login">Masuk</string>
+    <string name="login_desc">Silahkan login dengan akun Anda yang sudah ada</string>
+    <string name="welcome_desc">Selamat datang di Aplikasi User Story, silakan masuk atau daftar</string>
+    <string name="register">Daftar</string>
+    <string name="register_desc">Daftar dengan akun baru</string>
+    <string name="name">Nama</string>
+    <string name="logout">Keluar</string>
+    <string name="title">Judul</string>
+    <string name="description">Deskripsi</string>
+    <string name="switch_camera">Ganti Kamera</string>
+    <string name="capture_image">Ambil Gambar</string>
+    <string name="camera">KAMERA</string>
+    <string name="gallery">GALERI</string>
+    <string name="upload">UNGGAH</string>
+    <string name="preview_image">Pratinjau Gambar</string>
+</resources>

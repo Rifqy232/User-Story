@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.mry.userstory.data.CustomResult
 import com.mry.userstory.databinding.ActivityAddStoryBinding
-import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.utils.ViewModelFactory
 import com.mry.userstory.utils.createCustomTempFile
 import com.mry.userstory.utils.reduceFileImage
@@ -179,8 +178,6 @@ class AddStoryActivity : AppCompatActivity() {
                                 result.data.message,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
                             finish()
                         }
 

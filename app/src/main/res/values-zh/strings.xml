@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">User Story</string>
+    <string name="submit">提交</string>
+    <string name="login">登录</string>
+    <string name="login_desc">请使用您现有的帐户登录</string>
+    <string name="welcome_desc">欢迎使用用户故事应用，请登录或注册</string>
+    <string name="register">登记</string>
+    <string name="register_desc">注册一个新帐户</string>
+    <string name="name">姓名</string>
+    <string name="logout">登出</string>
+    <string name="title">标题</string>
+    <string name="description">描述</string>
+    <string name="switch_camera">切换相机</string>
+    <string name="capture_image">捕获图像</string>
+    <string name="camera">相机</string>
+    <string name="gallery">画廊</string>
+    <string name="upload">上传</string>
+    <string name="preview_image">预览图片</string>
+</resources>

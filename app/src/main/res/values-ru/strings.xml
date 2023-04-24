@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">User Story</string>
+    <string name="submit">представлять на рассмотрение</string>
+    <string name="login">авторизоваться</string>
+    <string name="login_desc">Пожалуйста, войдите в существующую учетную запись</string>
+    <string name="welcome_desc">Добро пожаловать в приложение User Story, пожалуйста, войдите или зарегистрируйтесь</string>
+    <string name="register">регистр</string>
+    <string name="register_desc">Зарегистрируйтесь с новой учетной записью</string>
+    <string name="name">имя</string>
+    <string name="logout">Выйти</string>
+    <string name="title">Заголовок</string>
+    <string name="description">описание</string>
+    <string name="switch_camera">Переключить камеру</string>
+    <string name="capture_image">Захват изображения</string>
+    <string name="camera">КAMEPA</string>
+    <string name="gallery">ГАЛЕРЕЯ</string>
+    <string name="upload">ЗАГРУЗИТЬ</string>
+    <string name="preview_image">Изображение для предварительного просмотра</string>
+</resources>

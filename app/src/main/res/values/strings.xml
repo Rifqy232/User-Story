@@ -1,23 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">User Story</string>
-    <string name="splash_screen_text">User\nStory</string>
+    <string name="splash_screen_text" translatable="false">User\nStory</string>
     <string name="submit">Submit</string>
     <string name="login">Login</string>
     <string name="login_desc">Please login with your existing account</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
     <string name="welcome_desc">Welcome to the User Story App, please login or register</string>
     <string name="register">Register</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="register_desc">Register with a new account</string>
     <string name="name">Name</string>
     <string name="logout">Logout</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="switch_camera">switch_camera</string>
-    <string name="capture_image">capture_image</string>
-    <string name="camerax">CAMERAX</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="camerax" translatable="false">CAMERAX</string>
     <string name="camera">CAMERA</string>
     <string name="gallery">GALLERY</string>
     <string name="upload">UPLOAD</string>
+    <string name="preview_image">Preview Image</string>
 </resources>
