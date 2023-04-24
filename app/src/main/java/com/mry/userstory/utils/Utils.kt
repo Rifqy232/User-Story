@@ -9,6 +9,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import com.mry.userstory.R
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
+private const val MAXIMAL_SIZE = 1_000_000
 
 val timestamp: String = SimpleDateFormat(
     FILENAME_FORMAT,
@@ -65,4 +67,19 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     inputStream.close()
 
     return myFile
+}
+
+fun reduceFileImage(file: File): File {
+    val bitmap = BitmapFactory.decodeFile(file.path)
+    var compressQuality = 100
+    var streamLength: Int
+    do {
+        val bmpStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        val bmpPicByteArray = bmpStream.toByteArray()
+        streamLength = bmpPicByteArray.size
+        compressQuality -= 5
+    } while (streamLength > MAXIMAL_SIZE)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    return file
 }

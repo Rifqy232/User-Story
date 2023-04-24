@@ -10,19 +10,33 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.mry.userstory.data.CustomResult
 import com.mry.userstory.databinding.ActivityAddStoryBinding
+import com.mry.userstory.ui.home.HomeActivity
+import com.mry.userstory.utils.ViewModelFactory
 import com.mry.userstory.utils.createCustomTempFile
+import com.mry.userstory.utils.reduceFileImage
 import com.mry.userstory.utils.rotateFile
 import com.mry.userstory.utils.uriToFile
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
+    private var getFile: File? = null
+    private val addStoryViewModel: AddStoryViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -88,7 +102,8 @@ class AddStoryActivity : AppCompatActivity() {
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
             myFile?.let { file ->
-                rotateFile(file, isBackCamera)
+//                rotateFile(file, isBackCamera)
+                getFile = file
                 binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
         }
@@ -118,7 +133,8 @@ class AddStoryActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
 
             myFile.let { file ->
-                rotateFile(file)
+//                rotateFile(file)
+                getFile = file
                 binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
         }
@@ -134,17 +150,77 @@ class AddStoryActivity : AppCompatActivity() {
 
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {result ->
+    ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data as Uri
-            selectedImg.let {uri ->
+            selectedImg.let { uri ->
                 val myFile = uriToFile(uri, this@AddStoryActivity)
+                getFile = myFile
                 binding.ivPreview.setImageURI(uri)
             }
         }
     }
 
     private fun uploadPhoto() {
-        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+
+            val description =
+                binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaType())
+            val imageMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile,
+            )
+            addStoryViewModel.uploadStory(imageMultiPart, description).observe(this) { result ->
+                if (result != null) {
+                    when (result) {
+                        is CustomResult.Loading -> showLoading(true)
+                        is CustomResult.Success -> {
+                            showLoading(false)
+                            Toast.makeText(
+                                this,
+                                result.data.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        is CustomResult.Error -> {
+                            showLoading(false)
+                            Toast.makeText(
+                                this,
+                                "Error happened: " + result.error,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        } else {
+            Toast.makeText(this, "Please insert a picture first", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.ivPreview.visibility = View.GONE
+            binding.btnGallery.visibility = View.GONE
+            binding.btnUpload.visibility = View.GONE
+            binding.btnCamerax.visibility = View.GONE
+            binding.btnCamera.visibility = View.GONE
+            binding.etDescription.visibility = View.GONE
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.ivPreview.visibility = View.VISIBLE
+            binding.btnGallery.visibility = View.VISIBLE
+            binding.btnUpload.visibility = View.VISIBLE
+            binding.btnCamerax.visibility = View.VISIBLE
+            binding.btnCamera.visibility = View.VISIBLE
+            binding.etDescription.visibility = View.VISIBLE
+        }
     }
 }

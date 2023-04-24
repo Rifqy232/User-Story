@@ -8,9 +8,22 @@ import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.LoginResult
 import com.mry.userstory.data.response.RegisterResponse
 import com.mry.userstory.data.response.StoriesResponse
+import com.mry.userstory.data.response.StoryUploadResponse
 import com.mry.userstory.data.retrofit.ApiService
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class Repository private constructor(private val apiService: ApiService) {
+    fun uploadStory(imageMultiPart: MultipartBody.Part, description: RequestBody): LiveData<CustomResult<StoryUploadResponse>> = liveData {
+        emit(CustomResult.Loading(true))
+        try {
+            val response = apiService.uploadStory(imageMultiPart, description)
+            emit(CustomResult.Success(response))
+        } catch (e: Exception) {
+            emit(CustomResult.Error(e.toString()))
+        }
+    }
+
     fun getDetailStory(id: String): LiveData<CustomResult<DetailStoryResponse>> = liveData {
         emit(CustomResult.Loading(true))
         try {
