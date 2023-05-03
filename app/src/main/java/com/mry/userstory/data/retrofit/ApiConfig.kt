@@ -1,6 +1,7 @@
 package com.mry.userstory.data.retrofit
 
 import android.content.Context
+import com.mry.userstory.BuildConfig
 import com.mry.userstory.utils.UserPreferences
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,8 +23,11 @@ class ApiConfig {
                 chain.proceed(requestHeader)
             }
 
-            val loggingInterceptor =
+            val loggingInterceptor = if(BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)

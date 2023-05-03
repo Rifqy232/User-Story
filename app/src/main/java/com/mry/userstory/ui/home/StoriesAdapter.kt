@@ -33,12 +33,14 @@ class StoriesAdapter(
     class ViewHolder(private var binding: StoriesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindStories(stories: ListStoryItem) {
-            binding.tvTitle.text = stories.name
-            binding.tvDescription.text = stories.description
             Glide.with(itemView)
                 .load(stories.photoUrl)
                 .into(binding.ivStory)
-            binding.ivStory.contentDescription = stories.description
+            binding.apply {
+                tvTitle.text = stories.name
+                tvDescription.text = stories.description
+                ivStory.contentDescription = stories.description
+            }
         }
     }
 

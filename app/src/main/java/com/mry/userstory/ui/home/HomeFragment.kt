@@ -75,9 +75,8 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
         binding.rvStories.adapter = storiesAdapter
     }
 
-    private fun showLoading(state: Boolean) {
-        if (state) binding.progressBar.visibility =
-            View.VISIBLE else binding.progressBar.visibility = View.GONE
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onItemClick(id: String) {

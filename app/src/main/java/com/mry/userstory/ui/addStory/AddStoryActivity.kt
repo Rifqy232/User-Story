@@ -19,9 +19,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.mry.userstory.data.CustomResult
 import com.mry.userstory.databinding.ActivityAddStoryBinding
+import com.mry.userstory.ui.home.HomeActivity
 import com.mry.userstory.utils.ViewModelFactory
 import com.mry.userstory.utils.createCustomTempFile
 import com.mry.userstory.utils.reduceFileImage
+import com.mry.userstory.utils.rotateFile
 import com.mry.userstory.utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -97,7 +99,10 @@ class AddStoryActivity : AppCompatActivity() {
                 it.data?.getSerializableExtra("picture")
             } as? File
 
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
             myFile?.let { file ->
+                rotateFile(file, isBackCamera)
                 getFile = file
                 binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
@@ -178,7 +183,9 @@ class AddStoryActivity : AppCompatActivity() {
                                 result.data.message,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            finish()
+                            val intent = Intent(this, HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
                         }
 
                         is CustomResult.Error -> {
@@ -199,21 +206,25 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.ivPreview.visibility = View.GONE
-            binding.btnGallery.visibility = View.GONE
-            binding.btnUpload.visibility = View.GONE
-            binding.btnCamerax.visibility = View.GONE
-            binding.btnCamera.visibility = View.GONE
-            binding.etDescription.visibility = View.GONE
+            binding.apply {
+                progressBar.visibility = View.VISIBLE
+                ivPreview.visibility = View.GONE
+                btnGallery.visibility = View.GONE
+                btnCamerax.visibility = View.GONE
+                btnUpload.visibility = View.GONE
+                btnCamera.visibility = View.GONE
+                etDescription.visibility = View.GONE
+            }
         } else {
-            binding.progressBar.visibility = View.GONE
-            binding.ivPreview.visibility = View.VISIBLE
-            binding.btnGallery.visibility = View.VISIBLE
-            binding.btnUpload.visibility = View.VISIBLE
-            binding.btnCamerax.visibility = View.VISIBLE
-            binding.btnCamera.visibility = View.VISIBLE
-            binding.etDescription.visibility = View.VISIBLE
+            binding.apply {
+                progressBar.visibility = View.GONE
+                ivPreview.visibility = View.VISIBLE
+                btnGallery.visibility = View.VISIBLE
+                btnUpload.visibility = View.VISIBLE
+                btnCamerax.visibility = View.VISIBLE
+                btnCamera.visibility = View.VISIBLE
+                etDescription.visibility = View.VISIBLE
+            }
         }
     }
 }

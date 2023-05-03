@@ -93,8 +93,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun showLoading(state: Boolean) {
-        if (state) binding.progressBar.visibility =
-            View.VISIBLE else binding.progressBar.visibility = View.GONE
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
