@@ -2,12 +2,14 @@ package com.mry.userstory.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mry.userstory.R
 import com.mry.userstory.databinding.ActivityHomeBinding
+import com.mry.userstory.ui.maps.MapsActivity
 import com.mry.userstory.ui.welcome.WelcomeActivity
 import com.mry.userstory.utils.UserPreferences
 
@@ -44,19 +46,25 @@ class HomeActivity : AppCompatActivity(), MenuItem.OnMenuItemClickListener {
         val optionLogout = menu?.findItem(R.id.option_logout)
         optionLogout?.setOnMenuItemClickListener(this)
 
+        val optionMaps = menu?.findItem(R.id.option_maps)
+        optionMaps?.setOnMenuItemClickListener(this)
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        val userPreferences = UserPreferences(this)
-
         when (item.itemId) {
             R.id.option_logout -> {
+                val userPreferences = UserPreferences(this)
                 userPreferences.removeUserToken()
                 Toast.makeText(this@HomeActivity, "Logout Success", Toast.LENGTH_SHORT).show()
                 val welcomeIntent = Intent(applicationContext, WelcomeActivity::class.java)
                 startActivity(welcomeIntent)
                 finish()
+            }
+            R.id.option_maps -> {
+                val mapsIntent = Intent(applicationContext, MapsActivity::class.java)
+                startActivity(mapsIntent)
             }
         }
         return true

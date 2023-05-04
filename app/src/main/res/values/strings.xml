@@ -24,4 +24,6 @@
     <string name="email_invalid">Email is not valid</string>
     <string name="password_invalid">Password too short</string>
     <string name="field_required">This field is required</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="map">Map</string>
 </resources>
