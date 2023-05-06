@@ -2,17 +2,13 @@ package com.mry.userstory.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mry.userstory.R
-import com.mry.userstory.data.CustomResult
-import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.databinding.FragmentHomeBinding
 import com.mry.userstory.ui.addStory.AddStoryActivity
 import com.mry.userstory.ui.detail.DetailFragment
@@ -23,6 +19,7 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
     private val homeViewModel: HomeViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
+    private lateinit var storiesAdapter: StoriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,28 +33,18 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState == null) {
-            homeViewModel.getAllStories()
+            homeViewModel.story
         }
 
-        homeViewModel.stories.observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when (result) {
-                    is CustomResult.Loading -> showLoading(true)
-                    is CustomResult.Success -> {
-                        showLoading(false)
-                        @Suppress("UNCHECKED_CAST")
-                        setStoriesData(result.data.listStory as List<ListStoryItem>)
-                    }
-
-                    is CustomResult.Error -> {
-                        showLoading(false)
-                        Toast.makeText(
-                            requireContext(),
-                            "Error happened: " + result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+        val storiesAdapter = StoriesAdapter(this)
+        binding.rvStories.adapter = storiesAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storiesAdapter.retry()
+            }
+        )
+        homeViewModel.story.observe(viewLifecycleOwner) { data ->
+            if (data != null) {
+                storiesAdapter.submitData(viewLifecycleOwner.lifecycle, data)
             }
         }
 
@@ -69,15 +56,6 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
             val intent = Intent(requireContext(), AddStoryActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun setStoriesData(listStories: List<ListStoryItem>) {
-        val storiesAdapter = StoriesAdapter(listStories, this)
-        binding.rvStories.adapter = storiesAdapter
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onItemClick(id: String) {

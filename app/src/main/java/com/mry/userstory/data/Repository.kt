@@ -2,7 +2,12 @@ package com.mry.userstory.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.mry.userstory.data.response.DetailStoryResponse
+import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.RegisterResponse
 import com.mry.userstory.data.response.StoriesResponse
@@ -45,14 +50,15 @@ class Repository private constructor(private val apiService: ApiService) {
         }
     }
 
-    fun getStories(): LiveData<CustomResult<StoriesResponse>> = liveData {
-        emit(CustomResult.Loading(true))
-        try {
-            val response = apiService.getStories()
-            emit(CustomResult.Success(response))
-        } catch (e: Exception) {
-            emit(CustomResult.Error(e.message.toString()))
-        }
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
+            }
+        ).liveData
     }
 
     fun register(

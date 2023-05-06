@@ -1,6 +1,7 @@
 package com.mry.userstory.data.retrofit
 
 import com.mry.userstory.data.response.DetailStoryResponse
+import com.mry.userstory.data.response.ListStoryItem
 import com.mry.userstory.data.response.LoginResponse
 import com.mry.userstory.data.response.RegisterResponse
 import com.mry.userstory.data.response.StoriesResponse
@@ -33,7 +34,10 @@ interface ApiService {
     ): LoginResponse
 
     @GET("stories")
-    suspend fun getStories(): StoriesResponse
+    suspend fun getStories(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoriesResponse
 
     @GET("stories/{id}")
     suspend fun getDetailStory(
@@ -49,6 +53,6 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStoriesLocation(
-        @Query("location") location: Int
+        @Query("location") location: Int,
     ): StoriesResponse
 }
