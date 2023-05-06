@@ -12,6 +12,16 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class Repository private constructor(private val apiService: ApiService) {
+    fun getStoriesLocation(location: Int): LiveData<CustomResult<StoriesResponse>> = liveData {
+        emit(CustomResult.Loading(true))
+        try {
+            val response = apiService.getStoriesLocation(location)
+            emit(CustomResult.Success(response))
+        } catch (e: Exception) {
+            emit(CustomResult.Error(e.toString()))
+        }
+    }
+
     fun uploadStory(
         imageMultiPart: MultipartBody.Part,
         description: RequestBody

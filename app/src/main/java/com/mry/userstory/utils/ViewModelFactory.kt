@@ -7,6 +7,7 @@ import com.mry.userstory.di.Injection
 import com.mry.userstory.ui.addStory.AddStoryViewModel
 import com.mry.userstory.ui.detail.DetailViewModel
 import com.mry.userstory.ui.home.HomeViewModel
+import com.mry.userstory.ui.maps.MapsViewModel
 import com.mry.userstory.ui.welcome.login.LoginViewModel
 import com.mry.userstory.ui.welcome.register.RegisterViewModel
 
@@ -33,6 +34,10 @@ class ViewModelFactory(private val context: Context) :
 
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
                 AddStoryViewModel(Injection.provideRepository(context)) as T
+            }
+
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(Injection.provideRepository(context)) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
