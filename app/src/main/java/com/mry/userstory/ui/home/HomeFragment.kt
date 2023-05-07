@@ -19,7 +19,6 @@ class HomeFragment : Fragment(), StoriesAdapter.OnItemClickListener {
     private val homeViewModel: HomeViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
-    private lateinit var storiesAdapter: StoriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

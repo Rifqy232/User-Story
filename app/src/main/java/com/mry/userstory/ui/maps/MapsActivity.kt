@@ -76,8 +76,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     is CustomResult.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        result.data.listStory?.forEach {
-                            val latLng = LatLng(it?.lat as Double, it.lon as Double)
+                        result.data.listStory.forEach {
+                            val latLng = LatLng(it.lat as Double, it.lon as Double)
                             val addressName = getAddressName(it.lat, it.lon)
                             mMap.addMarker(
                                 MarkerOptions()

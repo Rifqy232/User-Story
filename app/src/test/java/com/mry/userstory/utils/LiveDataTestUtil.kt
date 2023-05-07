@@ -1,4 +1,4 @@
-package com.mry.userstory
+package com.mry.userstory.utils
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

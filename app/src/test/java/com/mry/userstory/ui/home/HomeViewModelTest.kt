@@ -8,15 +8,14 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
-import com.mry.userstory.MainDispatcherRule
+import com.mry.userstory.utils.MainDispatcherRule
 import com.mry.userstory.data.Repository
 import com.mry.userstory.data.response.ListStoryItem
-import com.mry.userstory.getOrAwaitValue
+import com.mry.userstory.utils.getOrAwaitValue
 import com.mry.userstory.utils.DataDummy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -55,9 +54,9 @@ class HomeViewModelTest {
         )
         differ.submitData(actualStory)
 
-        Assert.assertNotNull(differ.snapshot())
-        Assert.assertEquals(dummyStory.size, differ.snapshot().size)
-        Assert.assertEquals(dummyStory[0].name, differ.snapshot()[0]?.name)
+        assertNotNull(differ.snapshot())
+        assertEquals(dummyStory.size, differ.snapshot().size)
+        assertEquals(dummyStory[0].name, differ.snapshot()[0]?.name)
     }
 
     @Test
@@ -78,7 +77,7 @@ class HomeViewModelTest {
         )
         differ.submitData(actualStory)
 
-        Assert.assertEquals(0, differ.snapshot().size)
+        assertEquals(0, differ.snapshot().size)
     }
 }
 

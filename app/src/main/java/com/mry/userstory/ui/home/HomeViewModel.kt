@@ -8,6 +8,6 @@ import androidx.paging.cachedIn
 import com.mry.userstory.data.Repository
 import com.mry.userstory.data.response.ListStoryItem
 
-class HomeViewModel(private val repository: Repository) : ViewModel() {
+class HomeViewModel(repository: Repository) : ViewModel() {
     val story: LiveData<PagingData<ListStoryItem>> = repository.getStories().cachedIn(viewModelScope)
 }

@@ -1,4 +1,4 @@
-package com.mry.userstory
+package com.mry.userstory.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
