@@ -2,6 +2,8 @@ package com.mry.userstory.ui.welcome.register
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +35,23 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setEnableButton()
+
+        binding.etCustomPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s?.length ?: 0) < 8) {
+                    setEnableButton()
+                } else {
+                    setEnableButton()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+
         binding.btnSubmit.setOnClickListener {
             val name = binding.etName.text.toString()
             val email = binding.etCustomEmail.text.toString()
@@ -63,6 +82,11 @@ class RegisterFragment : Fragment() {
                 binding.etName.error = resources.getString(R.string.field_required)
             }
         }
+    }
+
+    private fun setEnableButton() {
+        val result = binding.etCustomPassword.text
+        binding.btnSubmit.isEnabled = result != null && result.toString().isNotEmpty() && result.length >= 8
     }
 
     private fun registerProcess(data: RegisterResponse) {

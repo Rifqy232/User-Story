@@ -3,6 +3,8 @@ package com.mry.userstory.ui.welcome.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +47,23 @@ class LoginFragment : Fragment() {
             isFromRegister = isFromRegisterData
         }
 
+        setEnableButton()
+
+        binding.etCustomPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s?.length ?: 0) < 8) {
+                    setEnableButton()
+                } else {
+                    setEnableButton()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+
         binding.btnSubmit.setOnClickListener {
             val email = binding.etCustomEmail.text.toString()
             val password = binding.etCustomPassword.text.toString()
@@ -73,6 +92,11 @@ class LoginFragment : Fragment() {
         if (isFromRegister != null && isFromRegister as Boolean) {
             onBackPressed()
         }
+    }
+
+    private fun setEnableButton() {
+        val result = binding.etCustomPassword.text
+        binding.btnSubmit.isEnabled = result != null && result.toString().isNotEmpty() && result.length >= 8
     }
 
     private fun loginProcess(data: LoginResponse) {
